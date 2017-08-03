@@ -1,0 +1,8 @@
+<label>Search</label>
+<input type="text" value="Doe" />
+
+<h3>Search Results</h3>
+<div class="list-group">
+    <!--door normalisatie een variabele meegeven aan directive(person-name) person.name komt van de parent scope              -->
+    <search-result person-name="{{ person.name }}" person-address="{{ person.address }}"></search-result>
+</div>
