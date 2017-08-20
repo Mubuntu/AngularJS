@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+  <meta charset="utf-8">
+  <title>Promises</title>
+</head>
+
+<body>
+  <div ng-controller="theController">
+    {{myValue}}
+    step: {{step}}
+  </div>
+
+  <script src="http://code.angularjs.org/1.2.0-rc.3/angular.min.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    angular.module('app', []).
+    controller('theController', ['$scope', '$q', function($scope, $q) {
+      $scope.step =0;
+      $scope.addOne = (num) => {
+        $scope.step++;
+        var q = $q.defer();
+        if (angular.isNumber(num)) {
+        setTimeout(()=>{
+            q.resolve(num + 1);
+        },1000)
+        } else {
+          q.reject('NaN')
+        }
+        return q.promise;
+      };
+
+      $scope.myValue = 0;
+      $scope.promise = $scope.addOne($scope.myValue);
+      $scope.promise.then((v) => {
+        return $scope.addOne(v);
+      }).then((v) => {
+        return $scope.addOne(v);
+      }).then((v) => {
+        return $scope.addOne(v);
+      }).then(
+        //resolve
+        (v) => {
+          return $scope.addOne("v");
+        },
+        //reject:
+        (err) => {
+          return err;
+        }
+      ).then(
+        //resolve
+        (v) => {
+          $scope.myValue = v;
+        },
+        //reject:
+        (err) => {
+          $scope.myValue = err;
+        }
+      );
+    }])
+  </script>
+</body>
+
+</html>

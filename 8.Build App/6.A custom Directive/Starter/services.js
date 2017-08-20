@@ -5,7 +5,7 @@ weatherApp.service('cityService', function () {
 
 });
 
-weatherApp.service('weatherService',['$resource', function ($resource) {
+weatherApp.service('weatherService', ['$resource', function ($resource) {
     this.GetWeather = function (city, days) {
         var weatherAPI =
             $resource("http://api.openweathermap.org/data/2.5/forecast/daily?&appid=dc57d76dd32ed8cf08b46a5df83611d2", {
